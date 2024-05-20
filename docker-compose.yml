@@ -1,0 +1,12 @@
+version: "3.9"
+
+services:
+  app:
+    image: rnn_api:v1.0.0
+    build: 
+      context: .
+    volumes:
+      - .:/rnn_api
+    ports:
+      - "5000:5000"
+    container_name: rnn_api

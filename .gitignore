@@ -1,0 +1,4 @@
+venv/
+fasttext-wiki-news-subwords-300
+fasttext-wiki-news-subwords-300.vectors.npy
+rnn_ner3.h5
