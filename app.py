@@ -22,6 +22,8 @@ def api_prediction():
     except KeyError:
         return jsonify({'error': 'key "sentence" missing.'})
     sentence = sentence.split(' ')
+    if len(sentence) > 186:
+        return jsonify({'error': 'The sentence can't have more than 186 words.'})
     word_embeddings = [[fasttext_model[word] if word in fasttext_model else np.zeros(300) for word in sentence]]
     X = pad_sequences(word_embeddings, maxlen=max_seq_length, padding='post', value=vocab_size-1, dtype='float32')
     y = rnn_model.predict(X)
