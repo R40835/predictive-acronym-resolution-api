@@ -18,6 +18,7 @@ jobs:
 
     - name: Copy files to EC2
       run: |
+        # scp -o StrictHostKeyChecking=no -r ./* ec2-user@your-ec2-ip:/home/ec2-user/your-app-directory/
         scp -o StrictHostKeyChecking=no ./*.py ec2-54-227-16-110.compute-1.amazonaws.com:/home/ec2-user/rnn-ner-api/
 
     - name: Install dependencies on EC2
