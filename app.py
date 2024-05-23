@@ -34,8 +34,8 @@ def api_prediction():
 
 
 @app.route('/', methods=['GET'])
-def yo():
-    return "<h1>yo.</h1>"
+def index():
+    return "<h1>RNN for NER.</h1>"
 
 
 if __name__ == '__main__':
