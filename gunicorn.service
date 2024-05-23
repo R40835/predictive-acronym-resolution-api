@@ -1,0 +1,13 @@
+[Unit]
+Description=Gunicorn daemon for the app
+After=network.target
+
+[Service]
+User=ec2-user
+Group=ec2-user
+WorkingDirectory=/home/ec2-user/rnn-ner-api
+ExecStart=/home/ec2-user/.local/bin/gunicorn -b :5000 app:app
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

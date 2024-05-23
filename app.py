@@ -18,13 +18,16 @@ vocab_size = 999999
 def api_prediction():
     data = request.json
     sentence = data['sentence']
+    sentence = sentence.split(' ')
     word_embeddings = [[fasttext_model[word] if word in fasttext_model else np.zeros(300) for word in sentence]]
     X = pad_sequences(word_embeddings, maxlen=max_seq_length, padding='post', value=vocab_size-1, dtype='float32')
     y = rnn_model.predict(X)
     y = np.argmax(y, axis=-1)
     y = y[y!=5]
     y = y.tolist()
-    return jsonify({"result": y})
+    classes = {1: "B-AC", 3: "B-AC", 4: "I-LF", 0: "B-O"}
+    y_pred = [classes[i] for i in y]
+    return jsonify({"result": y_pred})
 
 
 @app.route('/', methods=['GET'])
