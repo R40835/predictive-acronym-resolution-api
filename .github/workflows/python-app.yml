@@ -1,5 +1,3 @@
-name: Deploy to EC2
-
 on:
   push:
     branches:
@@ -18,14 +16,13 @@ jobs:
       with:
         ssh-private-key: ${{ secrets.EC2_SSH_KEY }}
 
-    - name: Copy app to EC2
+    - name: Copy files to EC2
       run: |
-        # scp -o StrictHostKeyChecking=no -r ./* ${{ secrets.DNS }}:/home/ec2-user/rnn-ner-api/
-        scp -o StrictHostKeyChecking=no ./*.py ${{ secrets.DNS }}:/home/ec2-user/rnn-ner-api/
+        scp -o StrictHostKeyChecking=no ./*.py ec2-54-227-16-110.compute-1.amazonaws.com:/home/ec2-user/rnn-ner-api/
 
-    - name: Install dependencies on EC2 and restart gunicorn
+    - name: Install dependencies on EC2
       run: |
-        ssh -o StrictHostKeyChecking=no ${{ secrets.DNS }} << 'EOF'
+        ssh -o StrictHostKeyChecking=no ec2-user@ec2-54-227-16-110.compute-1.amazonaws.com << 'EOF'
           cd /home/ec2-user/rnn-ner-api/
           pip3 install -r requirements.txt
           sudo systemctl restart gunicorn.service
